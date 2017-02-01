@@ -31,3 +31,8 @@
 .sign-bar .button {
     float: right;
 }
+
+.sign-panel form,
+.sign-panel .panel-block > .notification {
+    flex-grow: 1;
+}
