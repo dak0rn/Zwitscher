@@ -1,4 +1,4 @@
--- :name query-create-user :i! :1
+-- :name query-create-user :<! :1
 INSERT INTO zw_user (name, password)
     VALUES (:name, :pass)
 RETURNING *;
