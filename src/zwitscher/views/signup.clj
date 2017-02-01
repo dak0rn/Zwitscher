@@ -39,6 +39,7 @@
                  ])
               [:div.panel-block
                (form-to ["POST" "/signup/do"]
+                        (anti-forgery-field)
                         [:label.label "Your username"]
                         [:div.control
                          [:input.input {:type "text"
