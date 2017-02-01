@@ -3,7 +3,11 @@
   (:require [zwitscher.config :refer [config]]
             [zwitscher.services.user :as user]
             [zwitscher.util :refer [to-uuid]]
-            [zwitscher.services.security :refer [add-jwt-header create-jwt get-claims]]
+            [zwitscher.services.security :refer [add-jwt-header
+                                                 create-jwt
+                                                 get-claims
+                                                 token-valid?
+                                                 reissue-token!]]
             [ring.util.response :refer [status redirect]]))
 
 (defn-
@@ -42,21 +46,23 @@
 
         ;; Path is not public, try to fetch the session
         (try
-          (if-let [ jwt (get-in request [ :cookies (get-in config [ :security :cookie-name ]):value ]) ]
+          (let [ jwt (get-in request [ :cookies (get-in config [ :security :cookie-name ]):value ]) ]
 
-            ;; Got a JWT
-            (let [claims (get-claims jwt)
-                  iduser (to-uuid (:jti claims)) ]
-              (if-let [ theuser (user/get-enabled-by-id iduser) ]
-                ;; Got a session
-                ;; Process the request and inject a new cookie
-                (add-jwt-header (next (assoc request :zwitscher-session theuser))
-                                (create-jwt { :jti iduser }))
+            (if (not (token-valid? jwt))
+              ;; Not JWT or invalid
+              (session-error no-redirect)
 
-                (session-error no-redirect)))
+              ;; Got a JWT
+              (let [claims (get-claims jwt)
+                    iduser (to-uuid (:jti claims)) ]
+                (if-let [theuser (user/get-enabled-by-id iduser)]
+                  ;; Got a session
 
-            ;; No JWT, redirect to login
-            (session-error no-redirect))
+                  ;; Process the request and inject a new cookie
+                  (add-jwt-header (next (assoc request :zwitscher-session theuser))
+                                  (reissue-token! jwt iduser))
+
+                  (session-error no-redirect)))))
 
           ;; In case of an error, redirect to the login, but log the
           ;; error.
