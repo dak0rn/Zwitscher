@@ -3,4 +3,4 @@ target/
 *.log
 *.tmp
 .DS_Store
-.lein-env
+.lein-*
