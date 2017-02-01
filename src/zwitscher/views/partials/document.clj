@@ -29,7 +29,9 @@
       [ :head
        [ :title (h (:title options)) ]
        [ :meta { :name "viewport" :content "width=device-width, initial-scale=1.0" } ]
-       (include-css "/font-awesome.min.css")
+       (include-css "/css/bulma.min.css")
+       (include-css "/css/font-awesome.min.css")
+       (include-css "/css/zwitscher.css?ver=1.0")
        (when (> (count scriptfiles) 0)
          (include-js "/scripts/feel.js?ver=0.9"))
        (for [ script scriptfiles ]
