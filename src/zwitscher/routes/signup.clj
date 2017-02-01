@@ -4,11 +4,11 @@
             [validateur.validation :as v]
             [zwitscher.is :refer [password? username?]]
             [zwitscher.services.user :refer [create-user]]
-            [zwitscher.services.security :refer [encrypt add-jwt-header create-jwt]]
+            [zwitscher.services.security :refer [encrypt add-jwt-header issue-token!]]
             [ring.util.response :refer [redirect-after-post]]
             [zwitscher.views.signup :refer [render-signup]]))
 
-(defn-
+(defn
  inline-validator
  "Creates a higher order function for validation"
  {:added "0.1.0"}
@@ -56,7 +56,7 @@
       :else (try
               (let [user (create-user name (encrypt pass))]
                 (add-jwt-header (redirect-after-post "/")
-                                (create-jwt {:jti (:iduser user)}))
+                                (issue-token! (:iduser user)))
                 )
               (catch org.postgresql.util.PSQLException ex
                 (if (= "23505" (.getSQLState ex))
