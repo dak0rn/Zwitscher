@@ -27,3 +27,22 @@
   { :added "0.1.0" }
   [ what ]
   (not (falsey? what)))
+
+(defn-truthy-is
+  password?
+  "Determines if the given value is a more or less secure password"
+  {:added "0.1.0"}
+  [what]
+  (and (not (empty? what)) (>= 8 (count what))))
+
+(def ^:private username-regex #"[a-zA-Z0-9]")
+
+(defn-truthy-is
+  username?
+  "Determines if the given value is a valid user name"
+  {:added "0.1.0"}
+  [what]
+  (->> what
+       (re-matches username-regex)
+       nil?
+       not))
