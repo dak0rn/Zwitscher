@@ -10,8 +10,7 @@
   "Determines if the given route is public"
   { :added "0.1.0" }
   [path]
-  (or (= "/setup" path)
-      (= "/setup/next" path)
+  (or (= "/signup" path)
       (= "/logout" path)
       (= "/signup" path)))
 
