@@ -11,7 +11,7 @@
   { :added "0.1.0" }
   [path]
   (or (= "/signup" path)
-      (= "/logout" path)
+      (= "/signup/do" path)
       (= "/signup" path)))
 
 (defn-
