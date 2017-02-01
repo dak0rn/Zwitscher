@@ -8,6 +8,7 @@
 
             ;; routes
             [zwitscher.routes.root]
+            [zwitscher.routes.signup]
 
             [compojure.core :as compojure]))
 
@@ -18,7 +19,7 @@
 (def ^:private route-handler
   (apply compojure/routes
     (concat
-
+      zwitscher.routes.signup/routes
       zwitscher.routes.root/routes
       )))
 
