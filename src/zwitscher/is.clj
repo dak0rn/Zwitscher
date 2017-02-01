@@ -33,9 +33,9 @@
   "Determines if the given value is a more or less secure password"
   {:added "0.1.0"}
   [what]
-  (and (not (empty? what)) (>= 8 (count what))))
+  (and (not (empty? what)) (>= (count what) 8)))
 
-(def ^:private username-regex #"[a-zA-Z0-9]")
+(def ^:private username-regex #"[a-zA-Z0-9]{3,64}")
 
 (defn-truthy-is
   username?
