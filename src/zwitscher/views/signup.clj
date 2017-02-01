@@ -4,7 +4,7 @@
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.form :refer [form-to]]
             [zwitscher.views.partials.document :refer [document]]
-            [zwitscher.views.partials.navigation :refer [navigation]]))
+            [zwitscher.views.partials.navigation :as nav]))
 
 (defn
   render-signup
@@ -12,7 +12,7 @@
   {:added "0.1.0"}
   [& {:keys [exists name-missing password-missing]}]
   (document {:title "Sign up for Zwitscher" :body-class "zwitscher-signin"}
-            (navigation)
+            (nav/empty)
             [:div.flex-wrap
              [:main.container
               [:div.columns

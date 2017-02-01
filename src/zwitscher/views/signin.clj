@@ -4,7 +4,7 @@
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.form :refer [form-to]]
             [zwitscher.views.partials.document :refer [document]]
-            [zwitscher.views.partials.navigation :refer [navigation]]))
+            [zwitscher.views.partials.navigation :as nav]))
 
 (defn
   render-signin
@@ -12,7 +12,7 @@
   {:added "0.1.0"}
   [& {:keys [invalid name-missing password-missing]}]
   (document {:title "Sign in to Zwitscher"}
-            (navigation)
+            (nav/empty)
             [:main.container
              [:div.panel.sign-panel
               [:div.panel-heading

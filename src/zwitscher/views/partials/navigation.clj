@@ -7,7 +7,7 @@
 
 (defn
   navigation
-  "Returns the navigation for the recruiter"
+  "Returns the navigation"
   { :added "0.1.0" }
   []
   [:nav.nav
@@ -19,6 +19,18 @@
 
    [:div.nav-right.nav-menu
     [:nav-item]
+    ]
+   ]
+  )
+
+(defn
+  empty
+  "Returns the empty navigation for non-authenticated pages"
+  { :added "0.1.0" }
+  []
+  [:nav.nav
+   [:div.nav-left
+    [:a.nav-item.zwitscher {:href "/"} "Zwitscher"]
     ]
    ]
   )
