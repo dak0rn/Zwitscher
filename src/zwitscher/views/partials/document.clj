@@ -18,8 +18,9 @@
    are optional.
    The following keys are supported in the options map:
 
-   - :scripts    Vector of additional scripts (see def script)
-   - :stylesheets Vector of additional stylesheets (see def stylesheets)"
+   - :scripts     Vector of additional scripts (see def script)
+   - :stylesheets Vector of additional stylesheets (see def stylesheets)
+   - :body-class  Class names for the body tag"
   { :added "0.1.0" }
   [ options & children ]
   (let [ scriptfiles (or (:scripts options) [])
@@ -39,4 +40,4 @@
        (for [ style styles ]
          (include-css (get stylesheets style)))
        ]
-      [ :body children ]])))
+      [:body {:class (:body-class options)} children]])))
