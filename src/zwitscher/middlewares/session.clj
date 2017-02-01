@@ -2,6 +2,7 @@
 (ns zwitscher.middlewares.session
   (:require [zwitscher.config :refer [config]]
             [zwitscher.services.user :as user]
+            [zwitscher.util :refer [to-uuid]]
             [zwitscher.services.security :refer [add-jwt-header create-jwt get-claims]]
             [ring.util.response :refer [status redirect]]))
 
@@ -45,7 +46,8 @@
 
             ;; Got a JWT
             (let [claims (get-claims jwt)
-                  iduser (:jti claims) ]
+                  iduser (to-uuid (:jti claims)) ]
+              (println "Claims" claims)
               (if-let [ theuser (user/get-enabled-by-id iduser) ]
                 ;; Got a session
                 ;; Process the request and inject a new cookie
