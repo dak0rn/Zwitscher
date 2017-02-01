@@ -5,7 +5,7 @@
 
 ;; Things we want to serve
 (def ^:private files {
-                      "/signup" "signup.html"
+                      "/signedout" "signedout.html"
 })
 
 (defn-
@@ -15,7 +15,7 @@
   [ file ]
   (content-type (resource-response file { :root "www" }) "text/html"))
 
-(def m-serve (memoize serve-file))
+;;(def serve-file (memoize actual-serve-file))
 
 (defn
   wrap-static
@@ -24,5 +24,5 @@
   [next]
   (fn [request]
     (if-let [file (get files (:uri request))]
-      (m-serve file)
+      (serve-file file)
       (next request))))
