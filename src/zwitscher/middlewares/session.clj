@@ -17,7 +17,7 @@
   [path]
   (or (= "/signup" path)
       (= "/signup/do" path)
-      (= "/signup" path)))
+      (= "/signin" path)))
 
 (defn-
   session-error
