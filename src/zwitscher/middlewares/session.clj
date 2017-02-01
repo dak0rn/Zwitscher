@@ -33,7 +33,7 @@
   [next]
   (fn [request]
     (let [ path (:uri request)
-           no-redirect (= "1" (get-in request [ :params :_ ]))]
+          no-redirect (= "1" (get-in request [ :params :_ ]))]
 
       ;; See if the path is public
       (if (public? path)
@@ -44,8 +44,8 @@
           (if-let [ jwt (get-in request [ :cookies (get-in config [ :security :cookie-name ]):value ]) ]
 
             ;; Got a JWT
-            (let [ claims (get-claims jwt)
-                   iduser (:jti claims) ]
+            (let [claims (get-claims jwt)
+                  iduser (:jti claims) ]
               (if-let [ theuser (user/get-enabled-by-id iduser) ]
                 ;; Got a session
                 ;; Process the request and inject a new cookie
