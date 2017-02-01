@@ -47,7 +47,6 @@
             ;; Got a JWT
             (let [claims (get-claims jwt)
                   iduser (to-uuid (:jti claims)) ]
-              (println "Claims" claims)
               (if-let [ theuser (user/get-enabled-by-id iduser) ]
                 ;; Got a session
                 ;; Process the request and inject a new cookie
