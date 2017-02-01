@@ -40,8 +40,10 @@
     ;; Migrations and seeding
     [ragtime "0.6.3"]
 
-    ;; redis client
+    ;; redis clietn
     [com.taoensso/carmine "2.15.0"]
+
+    [com.novemberain/validateur "2.5.0"]
   ]
 
   :plugins [
