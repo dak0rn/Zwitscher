@@ -51,7 +51,7 @@
               (if-let [ theuser (user/get-enabled-by-id iduser) ]
                 ;; Got a session
                 ;; Process the request and inject a new cookie
-                (add-jwt-header (next (assoc request :gw-session theuser))
+                (add-jwt-header (next (assoc request :zwitscher-session theuser))
                                 (create-jwt { :jti iduser }))
 
                 (session-error no-redirect)))
