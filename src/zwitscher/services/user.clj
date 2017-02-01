@@ -2,6 +2,7 @@
 (ns zwitscher.services.user
   (:require [hugsql.core :refer [def-db-fns]]
             [clojure.java.jdbc :refer [with-db-transaction]]
+            [zwitscher.services.security :refer [verify]]
             [zwitscher.services :refer [def-db-service]]))
 
 (def-db-fns "sql/user.sql")
@@ -34,3 +35,14 @@
   {:added "0.1.0"}
   [id]
   (query-get-enabled-by-id db {:uid id}))
+
+(def-db-service
+  get-for-session
+  "Given a user name and a plain text password, returns the
+   user entitity for that information or nil"
+  {:added "0.1.0"}
+  [name pass]
+  (when-let [user (get-by-username name)]
+    (when (verify pass (:password user))
+      user)
+    ))
