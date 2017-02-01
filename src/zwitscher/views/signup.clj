@@ -11,7 +11,7 @@
   "Renders the signup page"
   {:added "0.1.0"}
   [& {:keys [exists name-missing password-missing]}]
-  (document {:title "Signup for Zwitscher"}
+  (document {:title "Sign up for Zwitscher"}
             (navigation)
             [:main.container
              [:div.panel.sign-panel
@@ -57,6 +57,7 @@
                          ]
                         [:div.sign-bar
                          [:button.button.is-primary "Sign up"]
+                         [:a.button.is-link.mr-15 {:href "/signin"} "Already have an account?"]
                          ]
                         [:div.is-clearfix])
                ]
