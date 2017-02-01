@@ -10,6 +10,7 @@
             [zwitscher.routes.root]
             [zwitscher.routes.signup]
             [zwitscher.routes.signin]
+            [zwitscher.routes.signout]
 
             [compojure.core :as compojure]))
 
@@ -23,6 +24,7 @@
      zwitscher.routes.signup/routes
      zwitscher.routes.signin/routes
      zwitscher.routes.root/routes
+     zwitscher.routes.signout/routes
       )))
 
 (def routes

@@ -18,6 +18,7 @@
   (or (= "/signup" path)
       (= "/signup/do" path)
       (= "/signin/do" path)
+      (= "/signout" path)
       (= "/signin" path)))
 
 (defn-
