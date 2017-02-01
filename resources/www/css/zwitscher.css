@@ -26,6 +26,7 @@
 
 .sign-bar {
     flex-grow: 1;
+    margin-top: 2em;
 }
 
 .sign-bar .button {
@@ -36,3 +37,5 @@
 .sign-panel .panel-block > .notification {
     flex-grow: 1;
 }
+
+.mr-15 { margin-right: 15px !important }
