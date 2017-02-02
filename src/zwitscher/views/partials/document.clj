@@ -5,6 +5,7 @@
 
 ;; Mapping of script names to urls
 (def ^:private scripts {
+                        "dashboard" "/scripts/dashboard.js?ver=1.0"
 })
 
 ;; Additional stylesheets
@@ -33,6 +34,8 @@
        (include-css "/css/bulma.min.css")
        (include-css "/css/font-awesome.min.css")
        (include-css "/css/zwitscher.css?ver=1.0")
+       (include-js "/scripts/promise.min.js")
+       (include-js "/scripts/fetch.min.js")
        (when (> (count scriptfiles) 0)
          (include-js "/scripts/feel.js?ver=0.9"))
        (for [ script scriptfiles ]
