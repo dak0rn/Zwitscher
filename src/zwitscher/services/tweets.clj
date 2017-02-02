@@ -22,3 +22,22 @@
     (with-db-transaction [trx db]
       (query-insert-tweet trx {:uid uid :text tweet})
       (query-increase-tweet-count trx {:uid uid}))))
+
+(def-db-service
+  get-tweets
+  "Returns the tweet for a particular user"
+  {:added "0.1.0"}
+  [user]
+  (query-user-tweets db {:uid (:iduser user)}))
+
+(def-db-service
+  follows?
+  "Determines if a user follows another"
+  {:added "0.1.0"}
+  [follower followed]
+  (let [who (:iduser follower)
+        whom (:iduser followed)]
+    (-> (query-get-follow-entry db {:who who :whom whom})
+        nil?
+        not)
+    ))

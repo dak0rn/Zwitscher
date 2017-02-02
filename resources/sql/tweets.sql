@@ -42,3 +42,18 @@ INSERT INTO zw_tweet (text, user_id) VALUES (:text, :uid);
 UPDATE zw_user
   SET tweet_count = tweet_count + 1
 WHERE iduser = :uid;
+
+-- :name query-user-tweets :? :*
+SELECT
+    *
+FROM zw_tweet
+INNER JOIN zw_user
+    ON zw_tweet.user_id = zw_user.iduser
+WHERE user_id = :uid;
+
+-- :name query-get-follow-entry :? :1
+SELECT
+    *
+FROM zw_follows
+WHERE who = :who AND
+      whom = :whom;
