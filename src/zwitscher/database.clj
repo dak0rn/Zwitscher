@@ -1,6 +1,7 @@
 ;; database.clj - database connection namespace
 (ns zwitscher.database
   (:require [mount.core :refer [defstate]]
+            [clj-time.jdbc]
             [zwitscher.config :refer [config]]))
 
 (defstate db
