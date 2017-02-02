@@ -37,3 +37,8 @@ SELECT * FROM affected_tweets ORDER BY ts DESC;
 
 -- :name query-insert-tweet :i!
 INSERT INTO zw_tweet (text, user_id) VALUES (:text, :uid);
+
+-- :name query-increase-tweet-count :!
+UPDATE zw_user
+  SET tweet_count = tweet_count + 1
+WHERE iduser = :uid;
