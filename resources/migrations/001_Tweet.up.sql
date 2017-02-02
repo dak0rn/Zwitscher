@@ -4,7 +4,6 @@ CREATE TABLE zw_tweet (
          NOT NULL
          CHECK(text != ''),
     ts TIMESTAMP NOT NULL DEFAULT now(),
-    replied_to UUID REFERENCES zw_tweet(idtweet),
     like_count INTEGER
                NOT NULL
                CHECK (like_count >= 0)
