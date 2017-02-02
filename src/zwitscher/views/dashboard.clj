@@ -3,7 +3,7 @@
   (:require [hiccup.core :refer [h]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.form :refer [form-to]]
-            [zwitscher.util :refer [format-date-time]]
+            [zwitscher.views.partials.tweet :refer [render-tweet]]
             [zwitscher.views.partials.document :refer [document]]
             [zwitscher.views.partials.navigation :refer [navigation]]))
 
@@ -17,43 +17,6 @@
     [:span {:class (str "fa fa-" icon)}]]
    (h title)
    ])
-
-(defn-
-  render-tweet
-  "Renders a given tweet"
-  {:added "0.1.0"}
-  [tweet]
-  (let [name (-> tweet :name h)
-        liked (:liked tweet)]
-    [:div.box.tweet-box
-     [:p.title.is-5
-      [:a {:href (str "/" name)} (str "@" name)]
-      [:time (format-date-time (:ts tweet))]
-      ]
-
-     [:p (-> tweet :text h)]
-
-     [:div.box-actions
-      (cond
-        (= false liked) (form-to ["POST" "/like"]
-                                 (anti-forgery-field)
-                                 [:input {:type "hidden" :value (:idtweet tweet) :name "tweet"}]
-                                 [:button.button.is-link
-                                  [:span.fa.fa-heart-o]])
-        (= true liked) (form-to ["POST" "/dislike"]
-                                 (anti-forgery-field)
-                                 [:input {:type "hidden" :value (:idtweet tweet) :name "tweet"}]
-                                 [:button.button.is-link
-                                  [:span.fa.fa-heart]])
-
-        :else (form-to ["POST" "/delete"]
-                       (anti-forgery-field)
-                       [:input {:type "hidden" :value (:idtweet tweet) :name "tweet"}]
-                       [:button.button.is-link
-                        [:span.fa.fa-trash-o]])
-        )
-      ]
-     ]))
 
 (defn
   render-dashboard
@@ -92,7 +55,7 @@
                  [:div.media
                   [:div.media-content
                    [:p.title.is-4
-                    [:a {:href (str "/" (h (:name user)))} (->> user :name h (str "@"))]
+                    [:a {:href (str "/@" (h (:name user)))} (->> user :name h (str "@"))]
                     ]
                    [:p.title.is-6 (str (:follower_count user) " followers")]
                    [:p.title.is-6 (str (:tweet_count user) " tweets")]
