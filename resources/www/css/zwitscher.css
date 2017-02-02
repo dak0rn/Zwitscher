@@ -132,3 +132,7 @@ blockquote {
     font-size: 0.8em;
     text-decoration: none !important;
 }
+
+form {
+    margin: 0;
+}
