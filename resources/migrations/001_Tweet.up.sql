@@ -8,5 +8,6 @@ CREATE TABLE zw_tweet (
     like_count INTEGER
                NOT NULL
                CHECK (like_count >= 0)
-               DEFAULT 0
+               DEFAULT 0,
+    user_id UUID REFERENCES zw_user(iduser) NOT NULL
 );
