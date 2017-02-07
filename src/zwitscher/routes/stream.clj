@@ -3,7 +3,9 @@
   (:require [compojure.core :refer [GET POST]]
             [zwitscher.services.tweets :refer [get-tweets
                                                follows?
-                                               delete-tweet!]]
+                                               delete-tweet!
+                                               like-tweet!
+                                               dislike-tweet!]]
             [zwitscher.services.user :as user]
             [zwitscher.database :refer [db]]
             [zwitscher.util :refer [to-uuid]]
@@ -38,7 +40,29 @@
     (delete-tweet! user tweet)
     (redirect-after-post "/?d=t")))
 
+(defn-
+  like-tweet
+  "Handler for POST /like"
+  {:added "0.1.0"}
+  [request]
+  (let [user (:zwitscher-session request)
+        tweet (-> request :params :tweet to-uuid)]
+    (like-tweet! user tweet)
+    (redirect-after-post "/?l=t")))
+
+(defn-
+  dislike-tweet
+  "Handler for POST /dislike"
+  {:added "0.1.0"}
+  [request]
+  (let [user (:zwitscher-session request)
+        tweet (-> request :params :tweet to-uuid)]
+    (dislike-tweet! user tweet)
+    (redirect-after-post "/?dl=t")))
+
 (def routes [
              (GET "/@:name" request (get-stream request))
              (POST "/delete" request (delete-tweet request))
+             (POST "/like" request (like-tweet request))
+             (POST "/dislike" request (dislike-tweet request))
              ])

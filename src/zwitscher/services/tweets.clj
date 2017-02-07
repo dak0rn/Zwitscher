@@ -50,3 +50,17 @@
   (with-db-transaction [trx db]
     (query-delete-tweet trx {:uid (:iduser user) :tid tweet-id})
     (query-decrease-tweet-count trx {:uid (:iduser user)})))
+
+(def-db-service
+  like-tweet!
+  "Marks the tweet with the given id as being liked by the given user"
+  {:added "0.1.0"}
+  [user tweet-id]
+  (query-like-tweet db {:uid (:iduser user) :tid tweet-id}))
+
+(def-db-service
+  dislike-tweet!
+  "Marks the tweet with the given id as not being liked by the given user"
+  {:added "0.1.0"}
+  [user tweet-id]
+  (query-dislike-tweet db {:uid (:iduser user) :tid tweet-id}))

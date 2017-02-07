@@ -77,3 +77,19 @@ WHERE zw_tweet.idtweet = :tid AND
 UPDATE zw_user
 SET tweet_count = tweet_count - 1
 WHERE iduser = :uid;
+
+-- :name query-like-tweet :!
+WITH the_tweet AS (
+    SELECT :uid as user_id,
+           idtweet
+    FROM zw_tweet
+    WHERE user_id != :uid AND
+          idtweet = :tid
+)
+INSERT INTO zw_likes (user_id, tweet_id)
+SELECT user_id, idtweet from the_tweet;
+
+-- :name query-dislike-tweet :!
+DELETE FROM zw_likes
+WHERE user_id = :uid AND
+      tweet_id = :tid;
