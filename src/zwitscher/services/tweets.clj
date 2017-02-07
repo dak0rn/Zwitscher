@@ -64,3 +64,10 @@
   {:added "0.1.0"}
   [user tweet-id]
   (query-dislike-tweet db {:uid (:iduser user) :tid tweet-id}))
+
+(def-db-service
+  get-followers
+  "Returns the users following the given user"
+  {:added "0.1.0" :with-transaction true}
+  [user]
+  (query-get-followers db {:uid (:iduser user)}))

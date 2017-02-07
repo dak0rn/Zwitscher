@@ -93,3 +93,11 @@ SELECT user_id, idtweet from the_tweet;
 DELETE FROM zw_likes
 WHERE user_id = :uid AND
       tweet_id = :tid;
+
+-- :name query-get-followers :? :*
+SELECT
+    *
+FROM zw_follows
+INNER JOIN zw_user
+    ON zw_follows.who = zw_user.iduser
+WHERE zw_follows.whom = :uid;

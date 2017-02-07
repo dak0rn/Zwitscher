@@ -5,13 +5,14 @@
                                                follows?
                                                delete-tweet!
                                                like-tweet!
-                                               dislike-tweet!]]
+                                               dislike-tweet!
+                                               get-followers]]
             [zwitscher.services.user :as user]
             [zwitscher.database :refer [db]]
             [zwitscher.util :refer [to-uuid]]
             [ring.util.response :refer [redirect-after-post]]
             [clojure.java.jdbc :refer [with-db-transaction]]
-            [zwitscher.views.stream :refer [render-stream]]))
+            [zwitscher.views.stream :refer [render-stream render-followers]]))
 
 (defn-
   get-stream
@@ -60,8 +61,26 @@
     (dislike-tweet! user tweet)
     (redirect-after-post "/?dl=t")))
 
+(defn-
+  get-user-followers
+  "Handler for GET /@:name/followers"
+  {:added "0.1.0"}
+  [request]
+  (with-db-transaction [trx db]
+    (let [name (-> request :params :name)
+          target (user/get-by-username name trx)]
+      (if target
+        (let [followers (get-followers target trx)
+              follows (follows? (:zwitscher-session request) target)]
+          (render-followers target followers
+                            :follows follows))
+
+        (redirect-after-post "/?nf=t")
+        ))))
+
 (def routes [
              (GET "/@:name" request (get-stream request))
+             (GET "/@:name/followers" request (get-user-followers request))
              (POST "/delete" request (delete-tweet request))
              (POST "/like" request (like-tweet request))
              (POST "/dislike" request (dislike-tweet request))

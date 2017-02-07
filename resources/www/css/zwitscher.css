@@ -111,12 +111,15 @@ blockquote {
     margin-bottom: 15px;
 }
 
+.box {
+    border-radius: 0;
+}
+
 #say-box {
     margin-bottom: 1em;
     height: 90px;
     max-height: 90px;
     min-height: 10px;
-    border-radius: 0;
 }
 
 #submit {
@@ -153,4 +156,12 @@ form {
 
 .box-actions form {
     display: inline-block;
+}
+
+.follower-stream {
+    margin-top: 15px;
+}
+
+.follower-stats span:not(:last-child) {
+    margin-right: 20px;
 }
