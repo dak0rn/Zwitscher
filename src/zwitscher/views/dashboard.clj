@@ -42,9 +42,9 @@
                         [:div.is-clearfix]
                         )
 
-               [:div.tweet-stream
+               [:div.tweet-stream.mt-15
                 (doall
-                 (map render-tweet tweets))
+                 (map (render-tweet user) tweets))
                 [:hr]
                 ]
                ]

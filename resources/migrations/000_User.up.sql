@@ -9,7 +9,7 @@ CREATE TABLE zw_user (
     tweet_count INTEGER
                 DEFAULT 0
                 NOT NULL
-                CHECK(follower_count >= 0)
+                CHECK(tweet_count >= 0)
 );
 --;;
 CREATE INDEX idx_user_name ON zw_user(name);

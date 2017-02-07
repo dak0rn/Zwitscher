@@ -41,3 +41,12 @@
         nil?
         not)
     ))
+
+(def-db-service
+  delete-tweet!
+  "Deletes the tweet with the given ID for the given user"
+  {:added "0.1.0"}
+  [user tweet-id]
+  (with-db-transaction [trx db]
+    (query-delete-tweet trx {:uid (:iduser user) :tid tweet-id})
+    (query-decrease-tweet-count trx {:uid (:iduser user)})))

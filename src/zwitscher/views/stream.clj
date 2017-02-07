@@ -22,7 +22,7 @@
   render-stream
   "Renders the stream of a user"
   {:added "0.1.0"}
-  [user & {:keys [tweets follows]}]
+  [user session & {:keys [tweets follows]}]
   (let [name (-> user :name h)]
     (document {:title (str "@" name) :body-class "dashboard"}
               (navigation)
@@ -33,7 +33,7 @@
                  [:h4.title.is-4 (str "All tweets from @" name)]
                  [:div.tweet-stream
                   (doall
-                   (map render-tweet tweets))
+                   (map (render-tweet session) tweets))
                   [:hr]
                   ]
                  ]

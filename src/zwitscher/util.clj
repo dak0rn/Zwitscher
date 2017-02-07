@@ -15,4 +15,4 @@
   "Formats a given clj-time object"
   {:added "0.1.0"}
   [obj]
-  (tf/unparse (tf/formatter "YYYY-MM-DD HH:mm:ss") obj))
+  (tf/unparse (tf/formatter "YYYY-MM-dd HH:mm:ss") obj))

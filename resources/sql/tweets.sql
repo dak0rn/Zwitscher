@@ -4,6 +4,7 @@ WITH affected_tweets AS (
         zw_user.name,
         zw_tweet.text,
         zw_tweet.ts,
+        zw_tweet.user_id,
         zw_tweet.idtweet,
         CASE
             WHEN zw_likes.ts IS NULL
@@ -26,6 +27,7 @@ WITH affected_tweets AS (
         zw_user.name,
         zw_tweet.text,
         zw_tweet.ts,
+        zw_tweet.user_id,
         zw_tweet.idtweet,
         NULL as liked
     FROM zw_tweet
@@ -45,11 +47,19 @@ WHERE iduser = :uid;
 
 -- :name query-user-tweets :? :*
 SELECT
-    *
+    zw_tweet.*,
+    zw_user.*,
+    CASE
+        WHEN zw_likes.ts IS NULL
+        THEN FALSE
+        ELSE TRUE
+    END AS liked
 FROM zw_tweet
 INNER JOIN zw_user
     ON zw_tweet.user_id = zw_user.iduser
-WHERE user_id = :uid;
+LEFT JOIN zw_likes
+    ON zw_likes.tweet_id = zw_tweet.idtweet
+WHERE zw_tweet.user_id = :uid;
 
 -- :name query-get-follow-entry :? :1
 SELECT
@@ -57,3 +67,13 @@ SELECT
 FROM zw_follows
 WHERE who = :who AND
       whom = :whom;
+
+-- :name query-delete-tweet :!
+DELETE FROM zw_tweet
+WHERE zw_tweet.idtweet = :tid AND
+      zw_tweet.user_id = :uid;
+
+-- :name query-decrease-tweet-count :!
+UPDATE zw_user
+SET tweet_count = tweet_count - 1
+WHERE iduser = :uid;
