@@ -8,6 +8,16 @@
             [zwitscher.views.partials.navigation :refer [navigation]]))
 
 (defn-
+  s-pluralize
+  "Given a noun whose plural is built by adding 's', returns the correct
+   for the given count."
+  {:added "0.1.0"}
+  [noun count]
+  (if (= 1 count)
+    noun
+    (str noun \s)))
+
+(defn-
   render-sidelink
   "Renders a link in the sidebar panel"
   {:added "0.1.0"}
@@ -23,14 +33,16 @@
   "Renders a given follower"
   {:added "0.1.0"}
   [follower]
-  (let [at-name (str "@" (-> follower :name h))]
+  (let [at-name (str "@" (-> follower :name h))
+        followers (:follower_count follower)
+        tweets (:tweet_count follower)]
     [:div.box.follower-box
      [:p.title.is-6
       [:a {:href (str "/" at-name)} at-name]]
 
      [:div.follower-stats
-      [:span (str (-> follower :follower_count h) " followers") ]
-      [:span (str (-> follower :tweet_count h) " tweets")]
+      [:span (str (h followers) " " (s-pluralize "follower" followers)) ]
+      [:span (str (h tweets) " " (s-pluralize "tweet" tweets))]
       ]
      ]))
 
@@ -39,7 +51,9 @@
   "Renders the stream of a user"
   {:added "0.1.0"}
   [user session & {:keys [tweets follows]}]
-  (let [name (-> user :name h)]
+  (let [name (-> user :name h)
+        follower-count (:follower_count user)
+        tweet-count (:tweet_count user)]
     (document {:title (str "@" name) :body-class "dashboard"}
               (navigation)
               [:main.dashboard-container
@@ -62,8 +76,8 @@
                      [:p.title.is-4
                       [:a {:href (str "/@" name)} (str "@" name)]
                       ]
-                     [:p.title.is-6 (str (:follower_count user) " followers")]
-                     [:p.title.is-6 (str (:tweet_count user) " tweets")]
+                     [:p.title.is-6 (str (h follower-count) " " (s-pluralize "follower" follower-count))]
+                     [:p.title.is-6 (str (h tweet-count) " " (s-pluralize "tweet" tweet-count))]
                      ]
                     ]
                    ]
@@ -87,7 +101,9 @@
   {:added "0.1.0"}
   [user followers & {:keys [follows]}]
   (let [name (-> user :name h)
-        at-name (str "@" name)]
+        at-name (str "@" name)
+        follower-count (:follower_count user)
+        tweet-count (:tweet_count user)]
     (document {:title (str at-name "'s followers")}
               (navigation)
               [:main.dashboard-container
@@ -111,8 +127,8 @@
                      [:p.title.is-4
                       [:a {:href (str "/@" name)} (str "@" name)]
                       ]
-                     [:p.title.is-6 (str (:follower_count user) " followers")]
-                     [:p.title.is-6 (str (:tweet_count user) " tweets")]
+                     [:p.title.is-6 (str (h follower-count) " " (s-pluralize "follower" follower-count))]
+                     [:p.title.is-6 (str (h tweet-count) " " (s-pluralize "tweet" tweet-count))]
                      ]
                     ]
                    ]
