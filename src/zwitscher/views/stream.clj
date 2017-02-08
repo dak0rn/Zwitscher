@@ -7,7 +7,7 @@
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [zwitscher.views.partials.navigation :refer [navigation]]))
 
-(defn-
+(defn
   s-pluralize
   "Given a noun whose plural is built by adding 's', returns the correct
    for the given count."
