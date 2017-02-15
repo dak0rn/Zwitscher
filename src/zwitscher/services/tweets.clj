@@ -71,3 +71,13 @@
   {:added "0.1.0" :with-transaction true}
   [user]
   (query-get-followers db {:uid (:iduser user)}))
+
+(def-db-service
+  follow-user
+  "Sets 'who' as a follower of 'whom'"
+  {:added "0.1.0"}
+  [who whom]
+  (let [who-id (:iduser who)
+        whom-id (:iduser whom)]
+    (query-follow-user db {:who who-id :whom whom-id})
+    ))

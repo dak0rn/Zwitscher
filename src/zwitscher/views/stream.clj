@@ -87,7 +87,7 @@
                   (render-sidelink "Followers" (str "/@" name "/followers") "users")
                   (if follows
                     (render-sidelink "Unfollow" (str "/" (:iduser user) "/u") "unlink")
-                    (render-sidelink "Follow" (str "/" (:iduser user) "/f") "link"))
+                    (render-sidelink "Follow" (str "/f/" (:iduser user) ) "link"))
                   ]
                  ]
 

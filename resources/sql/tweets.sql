@@ -68,6 +68,15 @@ FROM zw_follows
 WHERE who = :who AND
       whom = :whom;
 
+-- :name query-follow-user :!
+INSERT INTO zw_follows (who, whom)
+VALUES (:who, :whom)
+ON CONFLICT DO NOTHING;
+
+-- :name query-unfollow-user :!
+DELETE FROM zw_follows
+WHERE who = :who AND whom = :whom;
+
 -- :name query-delete-tweet :!
 DELETE FROM zw_tweet
 WHERE zw_tweet.idtweet = :tid AND
