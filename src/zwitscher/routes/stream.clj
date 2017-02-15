@@ -22,13 +22,15 @@
   [request]
   (with-db-transaction [trx db]
     (let [name (-> request :params :name)
-          user (user/get-by-username name trx)
-          tweets (get-tweets user trx)
-          follows (follows? (:zwitscher-session request) user)]
-      (render-stream user
-                     (:zwitscher-session request)
-                     :tweets tweets
-                     :follows follows)))
+          user (user/get-by-username name trx)]
+      (if (nil? user)
+        (redirect-after-post "/?e=nf")
+        (let [tweets (get-tweets user trx)
+              follows (follows? (:zwitscher-session request) user)]
+            (render-stream user
+                           (:zwitscher-session request)
+                           :tweets tweets
+                           :follows follows)))))
   )
 
 (defn-
