@@ -165,3 +165,11 @@ form {
 .follower-stats span:not(:last-child) {
     margin-right: 20px;
 }
+
+#nav-state {
+    display: none;
+}
+
+#nav-state:checked ~ .nav-menu {
+    display: block;
+}

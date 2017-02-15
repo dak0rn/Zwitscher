@@ -15,10 +15,13 @@
     [:a.nav-item.zwitscher {:href "/"} "Zwitscher"]
     ]
 
-   [:span.nav-toggle [:span] [:span] [:span]]
+   [:label.nav-toggle {:for "nav-state"} [:span] [:span] [:span]]
+   [:input#nav-state {:type "checkbox"}]
 
    [:div.nav-right.nav-menu
-    [:nav-item]
+    [:div.nav-item [:a {:href "/"} "Home"]
+     ]
+    [:a.nav-item {:href "/signout"} "Sign out"]
     ]
    ]
   )
