@@ -99,19 +99,23 @@
   render-followers
   "Renders the followers for the given user"
   {:added "0.1.0"}
-  [user followers & {:keys [follows]}]
+  [user followers & {:keys [follows page-title back-link back-title title hide-unfollow-link]}]
   (let [name (-> user :name h)
         at-name (str "@" name)
         follower-count (:follower_count user)
         tweet-count (:tweet_count user)]
-    (document {:title (str at-name "'s followers")}
+    (document {:title (or title (str at-name "'s followers"))}
               (navigation)
               [:main.dashboard-container
                [:div.columns
 
                 [:div.column.is-8
-                 [:h4.title.is-4 (str "People following @" name)]
-                 [:a.button {:href (str "/" at-name)} (str "&larr; Back to " at-name)]
+                 [:h4.title.is-4 (or page-title (str "People following @" name))]
+                 [:a.button
+                  {:href (str "/" (or back-link at-name))}
+                  (or back-title
+                      (str "&larr; Back to " at-name))
+                  ]
                  [:div.follower-stream
                   (doall
                    (map render-follower followers))
@@ -136,9 +140,10 @@
 
                  [:div.panel.dashboard-panel
                   (render-sidelink "Followers" (str "/@" name "/followers") "users")
-                  (if follows
-                    (render-sidelink "Unfollow" (str "/" (:iduser user) "/u") "unlink")
-                    (render-sidelink "Follow" (str "/" (:iduser user) "/f") "link"))
+                  (when (not hide-unfollow-link)
+                    (if follows
+                      (render-sidelink "Unfollow" (str "/" (:iduser user) "/u") "unlink")
+                      (render-sidelink "Follow" (str "/" (:iduser user) "/f") "link")))
                   ]
                  ]
 

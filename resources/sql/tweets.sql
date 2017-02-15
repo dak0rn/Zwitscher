@@ -120,3 +120,11 @@ FROM zw_follows
 INNER JOIN zw_user
     ON zw_follows.who = zw_user.iduser
 WHERE zw_follows.whom = :uid;
+
+-- :name query-get-following :? :*
+SELECT
+    zw_user.*
+FROM zw_follows
+INNER JOIN zw_user
+    ON whom = iduser
+WHERE zw_follows.who = :uid;

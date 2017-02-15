@@ -8,7 +8,8 @@
                                                dislike-tweet!
                                                follow-user
                                                unfollow-user
-                                               get-followers]]
+                                               get-followers
+                                               get-following]]
             [zwitscher.services.user :as user]
             [zwitscher.database :refer [db]]
             [zwitscher.util :refer [to-uuid]]
@@ -115,6 +116,23 @@
         (redirect-after-post "/?e=nf")
         ))))
 
+(defn-
+  get-user-following
+  "Handler for GET /following"
+  {:added "0.1.0"}
+  [request]
+  (let [user (:zwitscher-session request)
+        following (get-following user)]
+    (render-followers user
+                     following
+                     :follows following
+                     :page-title "My followers"
+                     :title "My followers"
+                     :back-link ""
+                     :hide-unfollow-link true
+                     :back-title "&larr; Back to my profile")
+    ))
+
 (def routes [
              (GET "/@:name" request (get-stream request))
              (GET "/@:name/followers" request (get-user-followers request))
@@ -123,4 +141,5 @@
              (POST "/dislike" request (dislike-tweet request))
              (GET "/f/:uid" request (get-follow-user request))
              (GET "/u/:uid" request (get-unfollow-user request))
+             (GET "/following" request (get-user-following request))
              ])
