@@ -173,3 +173,18 @@ form {
 #nav-state:checked ~ .nav-menu {
     display: block;
 }
+
+.level-item.has-text-left {
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.level-item.has-text-right {
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.level .follower-count {
+    margin-right: 1em;
+    display: inline-block;
+}

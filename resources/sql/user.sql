@@ -11,3 +11,6 @@ SELECT * FROM zw_user WHERE iduser = :uid AND password IS NOT NULL;
 
 -- :name query-get-by-username :? :1
 SELECT * FROM zw_user WHERE name = :name;
+
+-- :name query-all-users :? :*
+SELECT * FROM zw_user;

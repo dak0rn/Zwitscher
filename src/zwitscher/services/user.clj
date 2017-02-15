@@ -46,3 +46,10 @@
     (when (verify pass (:password user))
       user)
     ))
+
+(def-db-service
+  get-all
+  "Returns all users"
+  {:added "0.1.0"}
+  []
+  (query-all-users db))

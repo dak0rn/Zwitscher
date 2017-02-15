@@ -13,6 +13,7 @@
             [zwitscher.routes.signout]
             [zwitscher.routes.say]
             [zwitscher.routes.stream]
+            [zwitscher.routes.discover]
 
             [compojure.core :as compojure]))
 
@@ -29,6 +30,7 @@
      zwitscher.routes.signout/routes
      zwitscher.routes.say/routes
      zwitscher.routes.stream/routes
+     zwitscher.routes.discover/routes
       )))
 
 (def routes
