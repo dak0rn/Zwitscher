@@ -86,7 +86,7 @@
                  [:div.panel.dashboard-panel
                   (render-sidelink "Followers" (str "/@" name "/followers") "users")
                   (if follows
-                    (render-sidelink "Unfollow" (str "/" (:iduser user) "/u") "unlink")
+                    (render-sidelink "Unfollow" (str "/u/" (:iduser user) ) "unlink")
                     (render-sidelink "Follow" (str "/f/" (:iduser user) ) "link"))
                   ]
                  ]

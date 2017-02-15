@@ -75,9 +75,23 @@
 (def-db-service
   follow-user
   "Sets 'who' as a follower of 'whom'"
+  {:added "0.1.0" :with-transaction true}
+  [who whom]
+  (let [who-id (:iduser who)
+        whom-id (:iduser whom)]
+    (with-db-transaction [trx db]
+      (query-follow-user trx {:who who-id :whom whom-id})
+      (query-increase-follower-count trx {:uid whom-id})
+      )))
+
+(def-db-service
+  unfollow-user
+  "Removes the following status"
   {:added "0.1.0"}
   [who whom]
   (let [who-id (:iduser who)
         whom-id (:iduser whom)]
-    (query-follow-user db {:who who-id :whom whom-id})
+    (with-db-transaction [trx db]
+      (query-unfollow-user trx {:who who-id :whom whom-id})
+      (query-decrease-follower-count trx {:uid whom-id}))
     ))

@@ -77,6 +77,16 @@ ON CONFLICT DO NOTHING;
 DELETE FROM zw_follows
 WHERE who = :who AND whom = :whom;
 
+-- :name query-increase-follower-count :!
+UPDATE zw_user
+SET follower_count = follower_count + 1
+WHERE iduser = :uid;
+
+-- :name query-decrease-follower-count :!
+UPDATE zw_user
+SET follower_count = follower_count - 1
+WHERE iduser = :uid;
+
 -- :name query-delete-tweet :!
 DELETE FROM zw_tweet
 WHERE zw_tweet.idtweet = :tid AND

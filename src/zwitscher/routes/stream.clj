@@ -7,6 +7,7 @@
                                                like-tweet!
                                                dislike-tweet!
                                                follow-user
+                                               unfollow-user
                                                get-followers]]
             [zwitscher.services.user :as user]
             [zwitscher.database :refer [db]]
@@ -99,6 +100,21 @@
         (redirect-after-post "/?e=nf")
         ))))
 
+(defn-
+  get-unfollow-user
+  "Handler for GET /u/:uid"
+  {:added "0.1.0"}
+  [request]
+  (let [user-id (-> request :params :uid to-uuid)
+        current (:zwitscher-session request)]
+    (with-db-transaction [trx db]
+      (if-let [target (user/get-by-id user-id trx)]
+        (do
+          (unfollow-user current target trx)
+          (redirect-after-post "/?f=t"))
+        (redirect-after-post "/?e=nf")
+        ))))
+
 (def routes [
              (GET "/@:name" request (get-stream request))
              (GET "/@:name/followers" request (get-user-followers request))
@@ -106,4 +122,5 @@
              (POST "/like" request (like-tweet request))
              (POST "/dislike" request (dislike-tweet request))
              (GET "/f/:uid" request (get-follow-user request))
+             (GET "/u/:uid" request (get-unfollow-user request))
              ])
