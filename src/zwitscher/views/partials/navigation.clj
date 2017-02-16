@@ -19,9 +19,8 @@
    [:input#nav-state {:type "checkbox"}]
 
    [:div.nav-right.nav-menu
+    [:a.nav-item {:href "/"} "Home"]
     [:a.nav-item.discover-link {:href "/discover"} "Discover" ]
-    [:div.nav-item [:a {:href "/"} "Home"]
-     ]
     [:a.nav-item {:href "/signout"} "Sign out"]
     ]
    ]
