@@ -14,3 +14,8 @@ SELECT * FROM zw_user WHERE name = :name;
 
 -- :name query-all-users :? :*
 SELECT * FROM zw_user;
+
+-- :name query-set-password :!
+UPDATE zw_user
+SET password = :pass
+WHERE iduser = :uid;

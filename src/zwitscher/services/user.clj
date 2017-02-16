@@ -53,3 +53,11 @@
   {:added "0.1.0"}
   []
   (query-all-users db))
+
+(def-db-service
+  set-password
+  "Sets the password for the given user
+   Expects the given password to be encrypted already"
+  {:added "0.1.0"}
+  [user password]
+  (query-set-password db {:pass password :uid (:iduser user)}))

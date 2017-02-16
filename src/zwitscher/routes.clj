@@ -14,6 +14,7 @@
             [zwitscher.routes.say]
             [zwitscher.routes.stream]
             [zwitscher.routes.discover]
+            [zwitscher.routes.settings]
 
             [compojure.core :as compojure]))
 
@@ -31,6 +32,7 @@
      zwitscher.routes.say/routes
      zwitscher.routes.stream/routes
      zwitscher.routes.discover/routes
+     zwitscher.routes.settings/routes
       )))
 
 (def routes
